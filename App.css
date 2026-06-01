@@ -1,0 +1,331 @@
+/* ── Reset & base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #060608;
+  --surface:   #0e0e14;
+  --surface-2: #16161f;
+  --accent:    #00ff87;
+  --accent-2:  #00c6ff;
+  --text:      #e8e8f0;
+  --text-dim:  #6b6b80;
+  --danger:    #ff4d6d;
+  --radius:    16px;
+  --glow:      0 0 40px rgba(0, 255, 135, 0.15);
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* ── Background orbs ──────────────────────────────────────────────────────── */
+.app {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,255,135,0.12), transparent);
+  top: -100px; left: -100px;
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.orb-2 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,198,255,0.10), transparent);
+  bottom: 0; right: -80px;
+  animation: drift 15s ease-in-out infinite alternate-reverse;
+}
+.orb-3 {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(120,80,255,0.08), transparent);
+  top: 50%; left: 50%;
+  animation: drift 10s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.1); }
+}
+
+/* ── Container ────────────────────────────────────────────────────────────── */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  padding: 24px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.header { text-align: center; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.logo-icon {
+  font-size: 28px;
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--accent);
+}
+.logo-text {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.tagline {
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* ── Direction bar ────────────────────────────────────────────────────────── */
+.direction-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 50px;
+  padding: 10px 20px;
+  width: 100%;
+  justify-content: center;
+}
+.lang-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color 0.3s;
+}
+.lang-label.active {
+  color: var(--accent);
+  text-shadow: 0 0 12px rgba(0,255,135,0.4);
+}
+.toggle-btn {
+  background: var(--surface-2);
+  border: 1px solid rgba(0,255,135,0.3);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--accent);
+  font-size: 16px;
+}
+.toggle-btn:hover {
+  background: rgba(0,255,135,0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(0,255,135,0.2);
+  transform: scale(1.1);
+}
+.toggle-icon { display: block; }
+
+/* ── Mic section ──────────────────────────────────────────────────────────── */
+.mic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  padding: 20px;
+}
+
+.mic-ring {
+  position: absolute;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  transition: transform 0.1s, opacity 0.1s;
+  pointer-events: none;
+}
+.mic-ring-2 {
+  width: 200px; height: 200px;
+  border-color: var(--accent-2);
+}
+
+.mic-btn {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,255,135,0.3);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), var(--glow);
+}
+.mic-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(0,255,135,0.25);
+}
+.mic-btn.recording {
+  background: rgba(255, 77, 109, 0.15);
+  border-color: var(--danger);
+  box-shadow: 0 0 40px rgba(255,77,109,0.3);
+  animation: pulse-rec 1s ease-in-out infinite;
+}
+.mic-btn.processing {
+  border-color: var(--accent-2);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+@keyframes pulse-rec {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
+
+.mic-icon  { font-size: 40px; }
+.stop-icon { font-size: 28px; color: var(--danger); }
+
+.mic-hint {
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+}
+
+/* ── Spinner ──────────────────────────────────────────────────────────────── */
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid rgba(0,198,255,0.2);
+  border-top-color: var(--accent-2);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Volume bars ──────────────────────────────────────────────────────────── */
+.volume-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 32px;
+}
+.volume-bar {
+  width: 4px;
+  background: linear-gradient(to top, var(--accent), var(--accent-2));
+  border-radius: 2px;
+  animation: bar-bounce 0.3s ease infinite alternate;
+}
+@keyframes bar-bounce {
+  from { transform: scaleY(0.6); }
+  to   { transform: scaleY(1.2); }
+}
+
+/* ── Results ──────────────────────────────────────────────────────────────── */
+.results {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fade-up 0.4s ease;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-card {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.translation-card {
+  background: var(--surface-2);
+  border-color: rgba(0,255,135,0.15);
+  box-shadow: var(--glow);
+}
+
+.result-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.translation-text {
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.replay-btn {
+  background: rgba(0,255,135,0.1);
+  border: 1px solid rgba(0,255,135,0.3);
+  color: var(--accent);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.replay-btn:hover {
+  background: rgba(0,255,135,0.2);
+}
+
+/* ── Error ────────────────────────────────────────────────────────────────── */
+.error-card {
+  width: 100%;
+  background: rgba(255,77,109,0.1);
+  border: 1px solid rgba(255,77,109,0.3);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--danger);
+  animation: fade-up 0.3s ease;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  opacity: 0.5;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 380px) {
+  .logo-text { font-size: 26px; }
+  .mic-btn { width: 100px; height: 100px; }
+  .mic-icon { font-size: 32px; }
+}

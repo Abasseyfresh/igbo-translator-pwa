@@ -2,8 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import "./App.css";
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://your-backend.up.railway.app";
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://igbo-translator-backend.vercel.app";
 // ── Main App ──────────────────────────────────────────────────────────────────
 export default function App() {
   const [direction, setDirection]     = useState("igbo-to-english");
